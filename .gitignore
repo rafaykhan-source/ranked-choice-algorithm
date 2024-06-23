@@ -1,8 +1,6 @@
 **__pycache__**
-.vscode
 data
 build
 processed-data
 results
 events
-src/datapipelines/*.ipynb
