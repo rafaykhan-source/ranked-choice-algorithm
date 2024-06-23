@@ -1,2 +1,2 @@
-mkdir build data processed-data results events
+mkdir build data results events
 python3 -m venv ~/.virtualenvs/ranked-choice
