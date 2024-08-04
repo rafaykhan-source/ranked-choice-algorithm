@@ -1,7 +1,7 @@
 """This module represents the data producer for the project.
 
 It is responsible for loading data pertaining to the
-ranked-choice assignment task and mapping this data to
+ranked-choice matching task and mapping this data to
 custom ADTs.
 """
 
@@ -34,7 +34,7 @@ def __load_data(csv_name: str, datatype: str = "") -> pd.DataFrame:
     if datatype == "events":
         return pd.read_csv(f"events/{csv_name}.csv")
 
-    return pd.read_csv(f"processed-data/{csv_name}.csv")
+    return pd.read_csv(f"data/{csv_name}.csv")
 
 
 def __create_event(row: list) -> Event:
@@ -69,12 +69,6 @@ def get_people(group: str) -> list[Person]:
 
 def main() -> None:
     """Unit Testing."""
-    people = get_people("wellness")
-
-    for person in people:
-        print(person)
-        print("------------")
-    return
 
 
 if __name__ == "__main__":

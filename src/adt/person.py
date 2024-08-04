@@ -1,7 +1,7 @@
 """This module contains the Person Abstract Datatype (ADT).
 
 This class wraps typical spreadsheet information
-associated with a person for the ranked-choice assignment
+associated with a person for the ranked-choice matching
 task.
 
 Typical usage example:
@@ -12,7 +12,6 @@ person = Person(
     choices=["choice_1", "choice_2", "choice_3"],
     top_choice="choice_1",
 )
-
 """
 
 from dataclasses import dataclass
@@ -55,7 +54,6 @@ def main() -> None:
         top_choice="Gathering 1",
     )
     print(person)
-    return
 
 
 if __name__ == "__main__":
