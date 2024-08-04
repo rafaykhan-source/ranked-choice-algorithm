@@ -1,4 +1,4 @@
-"""This module contains various metrics/evaluation functions for the assignment script.
+"""This module contains various metrics/evaluation functions for the matching script.
 
 The module's metric include high satisfaction percentage and general
 satisfaction percentage.
@@ -81,14 +81,14 @@ def count_unplaced(people: list[Person]) -> int:
     return count
 
 
-def collect_unhappy(people: list[Person]) -> int:
-    """Counts the number of unplaced individuals.
+def collect_unhappy(people: list[Person]) -> list[Person]:
+    """Returns unhappy people.
 
     Args:
-        people (list[Person]): People placed into events.
+        people (list[Person]): The people placed into events.
 
     Returns:
-        int: number of unplaced people.
+        list[Person]: The unhappy people.
     """
     return [person for person in people if person.placement not in person.choices]
 
@@ -103,16 +103,15 @@ def write_results(csv_name: str, event_map: dict[str, Event]) -> None:
     results = []
     for event in event_map.values():
         roster = event.get_roster()
-        for person in roster:
-            results.append((person.name, person.email, person.placement))
+        results.extend(
+            [(person.name, person.email, person.placement) for person in roster],
+        )
     df = pd.DataFrame(results, columns=["name", "email", "placement"])
     df.to_csv(f"results/{csv_name}_assignments.csv", index=False)
-    return
 
 
 def main() -> None:
     """Unit Testing."""
-    return
 
 
 if __name__ == "__main__":
