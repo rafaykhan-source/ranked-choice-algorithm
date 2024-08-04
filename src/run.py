@@ -1,15 +1,35 @@
-"""This module is responsible for running the ranked-choice assignment script."""
+"""This module is responsible for running the ranked-choice matching script."""
+
+import argparse
 
 import dataproducer as dp
 import metrics
 
 
-# TODO: Use argparse module and remove magic words
-def main() -> None:  # noqa: C901
-    """Runs the assignment script."""
-    event_map = dp.get_event_map("instructors")
+def get_parsed_arguments() -> argparse.Namespace:
+    """Returns parsed arguments.
+
+    Returns:
+        argparse.ArgumentParser: The argument parser.
+    """
+    parser = argparse.ArgumentParser(
+        prog="Ranked Choice Matcher",
+        description="Matches people to sections based on their ranked preferences.",
+        epilog="See datapipelines for data format.",
+    )
+    parser.add_argument(
+        "GROUP",
+        help="a group to run ranked-choice-matcher on",
+    )
+    return parser.parse_args()
+
+
+def main() -> None:  # noqa
+    """Runs the matching script."""
+    args = get_parsed_arguments()
+    event_map = dp.get_event_map(args.GROUP)
     options = list(event_map.values())  # all the events
-    people = dp.get_people("instructors")
+    people = dp.get_people(args.GROUP)
 
     # Try top choice placement
     for person in people:
@@ -56,9 +76,7 @@ def main() -> None:  # noqa: C901
 
     # Print resulting assignments
     for option_event in options:
-        names = []
-        for person in option_event.get_roster():
-            names.append(person.name)
+        names = [person.name for person in option_event.get_roster()]
         print(f"{option_event.name}: {names}")
         print("------------------------")
 
@@ -67,7 +85,6 @@ def main() -> None:  # noqa: C901
     metrics.write_results("instructors", event_map)
     print(metrics.count_unplaced(people))
     print(metrics.collect_unhappy(people))
-    return
 
 
 if __name__ == "__main__":
