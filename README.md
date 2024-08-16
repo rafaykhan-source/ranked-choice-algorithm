@@ -1,6 +1,5 @@
 # ranked-choice-matcher
-An algorithm/automation program for matching people to events based on their ranked preferences.
-
+Matches people to events based on their ranked preferences.
 
 ## Configuration:
 
