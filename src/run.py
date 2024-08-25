@@ -28,10 +28,27 @@ def main() -> None:  # noqa
     """Runs the matching script."""
     args = get_parsed_arguments()
     event_map = dp.get_event_map(args.GROUP)
-    options = list(event_map.values())  # all the events
+    options = list(event_map.values())
     people = dp.get_people(args.GROUP)
 
-    # Try top choice placement
+    # Pre-Determined Placements
+    for person in people:
+        if not person.placement:
+            continue
+
+        if person.placement not in event_map:
+            print(
+                f"Error: Person's pre-determined placement not in event map - {person.placement}"  # noqa
+            )
+            continue
+
+        placement_event = event_map[person.placement]
+        if not placement_event.is_full():
+            placement_event.add_person(person)
+            person.placement = placement_event.name
+            continue
+
+    # Top-Choice Placements
     for person in people:
         if person.placement:
             continue
@@ -46,7 +63,7 @@ def main() -> None:  # noqa
             person.placement = top_choice_event.name
             continue
 
-    # Try preferred choices placement
+    # Preferred Choice Placements
     for person in people:
         if person.placement:
             continue
@@ -63,7 +80,7 @@ def main() -> None:  # noqa
                 person.placement = choice_event.name
                 break
 
-    # Try placement remaining possible options
+    # Remaining Placements
     for person in people:
         if person.placement:
             continue
@@ -74,7 +91,7 @@ def main() -> None:  # noqa
                 person.placement = option_event.name
                 break
 
-    # Print resulting assignments
+    # Show Events
     for option_event in options:
         names = [person.name for person in option_event.get_roster()]
         print(f"{option_event.name}: {names}")
