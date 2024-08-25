@@ -5,6 +5,8 @@ ranked-choice matching task and mapping this data to
 custom ADTs.
 """
 
+import random
+
 import pandas as pd
 from adt import Event, Person
 
@@ -50,11 +52,12 @@ def __create_person(row: list) -> Person:
         email=row[0],
         choices=row[2].split(","),
         top_choice=row[3],
+        placement=row[4],
     )
 
 
 def get_people(group: str) -> list[Person]:
-    """Returns a list of Person objects.
+    """Returns a shuffled list of Person objects.
 
     Args:
         group (str): The desired group of people.
@@ -63,8 +66,11 @@ def get_people(group: str) -> list[Person]:
         list[Person]: The people in the group.
     """
     data = __load_data(group)
+    data = data.fillna("")
 
-    return list(map(__create_person, data.values.tolist()))
+    people = list(map(__create_person, data.values.tolist()))
+    random.shuffle(people)
+    return people
 
 
 def main() -> None:
