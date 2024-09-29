@@ -4,3 +4,4 @@ build
 processed-data
 results
 events
+*.lock
