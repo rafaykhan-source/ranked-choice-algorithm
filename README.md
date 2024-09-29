@@ -7,14 +7,12 @@ Matches people to events based on their ranked preferences.
 
 In the `ranked-choice-matcher` directory, run:
 ```bash
-./scripts/setup.sh
+mkdir build data results events
 ```
 
 To setup the virtual environment, run:
 ```bash
-python3 -m venv ~/.virtualenvs/ranked-choice
-source ~/.virtualenvs/ranked-choice/bin/activate
-pip install . && pip install .[development]
+uv sync
 pre-commit install
 ```
 
@@ -31,4 +29,6 @@ python src/run.py instructors
 ```
 
 ## Acknowledgements
+
+[![pre-commit](https://img.shields.io/badge/pre--commit-enabled-brightgreen?logo=pre-commit)](https://github.com/pre-commit/pre-commit)
 [![Ruff](https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/astral-sh/ruff/main/assets/badge/v2.json)](https://github.com/astral-sh/ruff)
