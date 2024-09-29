@@ -1,22 +1,18 @@
-[build-system]
-requires = ["setuptools"]
-build-backend = "setuptools.build_meta"
-
-[tool.distutils.egg_info]
-egg_base = "build"
-
 [project]
 name = "ranked_choice_matcher"
-version = "0.0.2"
-authors = [{ name = "Rafay Khan" }]
-maintainers = [{ name = "Rafay Khan" }]
+version = "0.1.0"
 description = "An algorithm/automation program for matching people to events based on their ranked preferences."
 readme = "README.md"
 requires-python = ">=3.10"
-dependencies = ["pyyaml", "pandas"]
+dependencies = [
+    "pandas>=2.2.3",
+    "pyyaml>=6.0.2",
+]
 
-[project.optional-dependencies]
-development = ["ruff", "mypy", "pre-commit"]
+[tool.uv]
+dev-dependencies = [
+    "pre-commit>=3.8.0",
+]
 
 [tool.ruff.lint]
 select = [
